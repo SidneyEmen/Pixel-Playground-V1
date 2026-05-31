@@ -1,1 +1,44 @@
-/* Header */ 
+/* Header */
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+header {
+    background-color: grey;
+    padding: 2vw;
+
+    display: flex;               
+    align-items: center;         
+    justify-content: space-between;
+}
+
+header > nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 300px;
+}
+
+header > nav > a {
+    text-decoration: none;
+    color:rgb(255, 255, 255)
+}
+
+header > nav > a:hover {
+    color:rgb(0, 0, 0)
+}
+
+header > img {
+    max-width: 100%;
+    height: auto;
+    height: 10vh;
+}
+
+
+/* ... */
+
+
+
+
+/* ... */
