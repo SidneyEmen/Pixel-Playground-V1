@@ -13,6 +13,7 @@
     <script src="js/PixelPlayground.js" defer></script>
 
     <header>
+        <h1>Welkom op Game Verse</h1>
         <nav>
             <a href="index.php">Home</a>
             <a href="gamepage.php">Games</a>
