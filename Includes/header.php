@@ -13,6 +13,8 @@
     <script src="js/PixelPlayground.js" defer></script>
 
     <header>
+        <img src="img/logo_gameverse.png" alt="GameVerse Logo">
+
         <nav>
             <a href="index.php">Home</a>
             <a href="gamepage.php">Games</a>
