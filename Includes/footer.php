@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<footer>
+    <img src="img/logo_gameverse.png" alt="GameVerse Logo">
+
+    <a>Student example website - 1st year, last project</a>
+    <a>Main purpose: Vulnerabilities, CRUD, Game logic</a>
+
+    <button>Dark Mode</button>
     
+</footer>
 </body>
 </html>

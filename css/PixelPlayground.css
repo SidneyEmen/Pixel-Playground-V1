@@ -4,10 +4,23 @@
     padding: 0px;
 }
 
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
 header {
     background-color: grey;
     padding: 2vw;
-
     display: flex;               
     align-items: center;         
     justify-content: space-between;
@@ -22,23 +35,67 @@ header > nav {
 
 header > nav > a {
     text-decoration: none;
-    color:rgb(255, 255, 255)
+    color: white;
+    font-size: 1rem;
+    padding: 0.2vw 0.6vw;
+    border-radius: 6px;
+    transition: 0.2s ease;
 }
 
 header > nav > a:hover {
-    color:rgb(0, 0, 0)
+    color: black;
+    background-color: white;
 }
 
 header > img {
     max-width: 100%;
     height: auto;
-    height: 10vh;
+    height: 8vh;
 }
 
 
-/* ... */
+/* Footer */
+footer {
+    background-color: grey;
+}
 
+footer > img {
+    max-width: 100%;
+    height: auto;
+    height: 8vh;
+}
 
+footer {
+    background-color: grey;
+    padding: 2vw;
+    display: flex;               
+    align-items: center;         
+    justify-content: space-between;
+}
 
+footer > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 300px;
+}
 
-/* ... */
+footer > a {
+    color:rgb(255, 255, 255)
+}
+
+footer > button {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 0.6vw 1.4vw;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+footer > button:hover {
+    background-color: white;
+    color: black;
+}
