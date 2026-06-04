@@ -2,7 +2,8 @@
 :root {
   --white: white;
   --black: black;
-  --header_navbar: grey;
+  --background: rgb(25, 27, 45);
+  --header_navbar: rgb(2, 4, 38);
 }
 
 
@@ -14,12 +15,14 @@
 
 html, body {
     height: 100%;
+    color: var(--white);
 }
 
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: var(--background);
 }
 
 main {
@@ -105,4 +108,41 @@ footer > button {
 footer > button:hover {
     background-color: var(--white);
     color: var(--black);
+}
+
+
+/* HomePage */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+}
+
+.welcome_title {
+    font-size: 3rem;
+    margin-bottom: 60px;
+}
+
+.sections_info {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+}
+
+.website_info,
+.highscore_info {
+    width: 45%;
+    text-align: center;
+}
+
+.website_info h2,
+.highscore_info h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.website_info p,
+.highscore_info p {
+    font-size: 1rem;
 }
