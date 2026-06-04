@@ -9,7 +9,7 @@
     <meta name="author" content="Farich & Sidney">
     <title>GameVerse</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="css/PixelPlayground.css">
+    <link rel="stylesheet" href="css/PixelPlayground.css?v=<?php echo time(); ?>">
     <script src="js/PixelPlayground.js" defer></script>
     <link rel="icon" href="img/logo_gameverse.png" type="image/default.png">
 </head>
