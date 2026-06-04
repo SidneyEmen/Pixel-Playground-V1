@@ -1,1 +1,108 @@
-/* Header */ 
+/* Root Colors */
+:root {
+  --white: white;
+  --black: black;
+  --header_navbar: grey;
+}
+
+
+/* Main Stuff */
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+
+/* Header */
+header {
+    background-color: var(--header_navbar);
+    padding: 0.8vw;
+    display: flex;               
+    align-items: center;         
+    justify-content: space-between;
+}
+
+header > nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 300px;
+}
+
+header > nav > a {
+    text-decoration: none;
+    color: var(--white);
+    font-size: 1.6rem;
+    padding: 0.2vw 0.6vw;
+    border-radius: 6px;
+    transition: 0.2s ease;
+}
+
+header > nav > a:hover {
+    color: var(--black);
+    background-color: var(--white);
+}
+
+header > img {
+    max-width: 100%;
+    height: auto;
+    height: 8vh;
+}
+
+
+/* Footer */
+footer > img {
+    max-width: 100%;
+    height: auto;
+    height: 8vh;
+}
+
+footer {
+    background-color: var(--header_navbar);
+    padding: 1.2vw;
+    display: flex;               
+    align-items: center;         
+    justify-content: space-between;
+}
+
+footer > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.4rem;
+    gap: 300px;
+}
+
+footer > a {
+    color: var(--white);
+}
+
+footer > button {
+    background-color: transparent;
+    border: 2px solid var(--white);
+    color: var(--white);
+    padding: 0.6vw 1.4vw;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+footer > button:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
