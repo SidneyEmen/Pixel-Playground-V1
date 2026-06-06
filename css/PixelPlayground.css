@@ -4,6 +4,7 @@
   --black: black;
   --background: rgb(25, 27, 45);
   --header_navbar: rgb(2, 4, 38);
+  --game_box: #24263a;
 }
 
 
@@ -146,3 +147,38 @@ main {
 .highscore_info p {
     font-size: 1rem;
 }
+
+
+/* GamePage */
+.games-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 30px;
+    color: var(--white);
+}
+
+.games-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.game {
+    display: block;
+    width: 300px;
+    text-align: center;
+    color: var(--white);
+    text-decoration: none;
+    background-color: var(--game_box);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.game img {
+    width: 100%;
+    border-radius: 8px;
+    margin: 10px 0px;
+}
+
+
+/* DarkMode */
