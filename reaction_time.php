@@ -13,6 +13,7 @@
     </section>
 
 <script>
+    
 const box = document.querySelector('.reaction-box');
 const info = document.querySelector('.reaction-info');
 const restartButton = document.getElementById('restart-button');
