@@ -1,4 +1,4 @@
-// Event Bubbling //
+// Event Bubbling
 const container = document.getElementById('games-container');
 
 container.addEventListener('click', (event) => {
@@ -7,4 +7,4 @@ container.addEventListener('click', (event) => {
 });
 
 
-// Light & Dark Mode //
+// Reaction_Game (Check reaction_time.php)
