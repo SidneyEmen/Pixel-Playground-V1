@@ -36,10 +36,8 @@
         const invaderHeight = 20;
         let invaderSpeed = 2;
         let invaderDirection = 1;
-        let level = 1;
-        let score = 0;
-        l
-
+        let currentLevel = 1; // <--- VOEG DIT HIER TOE
+        
         const keys = {};
 
         function createInvaders() {
