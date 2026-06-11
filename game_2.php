@@ -25,7 +25,7 @@
         const invaderCols = 8;
         const invaderWidth = 35;
         const invaderHeight = 20;
-        let invaderSpeed = 1;
+        let invaderSpeed = 3;
         let invaderDirection = 1;
 
         const keys = {};
