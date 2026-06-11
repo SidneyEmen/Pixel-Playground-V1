@@ -156,19 +156,6 @@
          ];
 
 
-         const invaderDesign = [
-    [0,0,0,0,1,1,1,1,0,0,0,0], // Rij 1: De bovenste antenne/kop
-    [0,0,0,0,1,1,1,1,0,0,0,0], // Rij 2
-    [0,1,1,0,1,1,1,1,0,1,1,0], // Rij 3: Schouders vallen binnen
-    [1,1,1,1,1,1,1,1,1,1,1,1], // Rij 4: Brede lijf
-    [1,1,1,1,1,1,1,1,1,1,1,1], // Rij 5: Brede lijf
-    [1,1,0,0,1,1,1,1,0,0,1,1], // Rij 6: Ruimte voor de "boze ogen" onderin
-    [1,1,0,1,0,0,0,0,1,0,1,1], // Rij 7: Ogen uitsnijden (witte driehoekjes)
-    [1,1,0,0,1,1,1,1,0,0,1,1], // Rij 8: Onderkant middenschip
-    [1,1,0,0,0,0,0,0,0,0,1,1], // Rij 9: Poten aan de zijkant
-    [1,1,0,0,0,0,0,0,0,0,1,1]  // Rij 10: Poten aan de zijkant
-];
-
     const pixelWidth = player.width / 15;
     const pixelHeight = player.height / 13;
 
@@ -198,6 +185,20 @@
             invaders.forEach(invader => {
                 ctx.fillRect(invader.x, invader.y, invader.width, invader.height);
             });
+
+                  const invaderDesign = [
+    [0,0,0,0,1,1,1,1,0,0,0,0], // Rij 1: De bovenste antenne/kop
+    [0,0,0,0,1,1,1,1,0,0,0,0], // Rij 2
+    [0,1,1,0,1,1,1,1,0,1,1,0], // Rij 3: Schouders vallen binnen
+    [1,1,1,1,1,1,1,1,1,1,1,1], // Rij 4: Brede lijf
+    [1,1,1,1,1,1,1,1,1,1,1,1], // Rij 5: Brede lijf
+    [1,1,0,0,1,1,1,1,0,0,1,1], // Rij 6: Ruimte voor de "boze ogen" onderin
+    [1,1,0,1,0,0,0,0,1,0,1,1], // Rij 7: Ogen uitsnijden (witte driehoekjes)
+    [1,1,0,0,1,1,1,1,0,0,1,1], // Rij 8: Onderkant middenschip
+    [1,1,0,0,0,0,0,0,0,0,1,1], // Rij 9: Poten aan de zijkant
+    [1,1,0,0,0,0,0,0,0,0,1,1]  // Rij 10: Poten aan de zijkant
+];
+
         }
 
         function gameLoop() {
