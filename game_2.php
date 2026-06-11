@@ -31,7 +31,7 @@
         let bullets = [];
         let invaders = [];
         const invaderRows = 3;
-        const invaderCols = 8;
+        const invaderCols = 12;
         const invaderWidth = 35;
         const invaderHeight = 20;
         let invaderSpeed = 2;
@@ -182,16 +182,18 @@
 
             // Invaders (Wit)
             const invaderDesign = [
-           [0,0,0,0,1,1,1,1,0,0,0,0], // Rij 1: De bovenste antenne/kop
-      [0,0,0,0,1,1,1,1,0,0,0,0], // Rij 2
-    [0,1,1,0,1,1,1,1,0,1,1,0], // Rij 3: Schouders vallen binnen
-    [1,1,1,1,1,1,1,1,1,1,1,1], // Rij 4: Brede lijf
-    [1,1,1,1,1,1,1,1,1,1,1,1], // Rij 5: Brede lijf
-    [1,1,0,0,1,1,1,1,0,0,1,1], // Rij 6: Ruimte voor de "boze ogen" onderin
-    [1,1,0,1,0,0,0,0,1,0,1,1], // Rij 7: Ogen uitsnijden (witte driehoekjes)
-    [1,1,0,0,1,1,1,1,0,0,1,1], // Rij 8: Onderkant middenschip
-    [1,1,0,0,0,0,0,0,0,0,1,1], // Rij 9: Poten aan de zijkant
-    [1,1,0,0,0,0,0,0,0,0,1,1]  // Rij 10: Poten aan de zijkant
+            [0,0,0,0,0,1,1,1,0,0,0,0,0], // Rij 1: Bovenkant antenne
+            [0,0,0,0,0,1,1,1,0,0,0,0,0], // Rij 2: Onderkant antenne
+            [0,0,0,0,1,1,1,1,1,0,0,0,0], // Rij 3: Schouderaanzet midden
+            [1,1,0,0,1,1,1,1,1,0,0,1,1], // Rij 4: Toppen van de zijpoten
+            [1,1,1,1,1,1,1,1,1,1,1,1,1], // Rij 5: Volledig brede bovenkant
+            [1,1,1,1,1,1,1,1,1,1,1,1,1], // Rij 6: Volledig brede middenstuk
+            [1,1,0,0,1,1,1,1,1,0,0,1,1], // Rij 7: Uitsnijding onderkant zijkanten
+            [1,1,0,0,1,0,1,0,1,0,0,1,1], // Rij 8: De "witte boze ogen" (0 = leeglaten)
+            [1,1,0,0,1,1,1,1,1,0,0,1,1], // Rij 9: Onderkant middenschip
+            [1,1,0,0,0,0,0,0,0,0,0,1,1], // Rij 10: Losstaande poten onderkant
+            [1,1,0,0,0,0,0,0,0,0,0,1,1]
+          
 ];
 
 ctx.fillStyle = "#8208d9"; // Jouw paarse kleur
