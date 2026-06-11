@@ -2,7 +2,7 @@
 
 <main>
 
-<h1>[Game 2]</h1>
+<h1>Space Invaders</h1>
 
 </main>
 
