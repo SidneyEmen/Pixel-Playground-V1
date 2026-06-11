@@ -11,7 +11,28 @@
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const backgroundImage = new Image();
-        backgroundImage.src = 'img/SpaceBackgroundSI.png';
+        backgroundImage.src = 'img/SpaceBackground.png';
+
+        function draw() {
+    // 1. Teken de achtergrondafbeelding in plaats van het canvas leeg te maken
+    // (Zorg dat de afbeelding de volledige breedte en hoogte van het canvas krijgt)
+    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+    // 2. Hieronder staat je bestaande code voor de speler, kogels en invaders
+    ctx.fillStyle = "#007bff";
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+    
+    // ... rest van je draw code ...
+}
+
+
+         backgroundImage.onload = function() {
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+         };
+
+         function drawBackground() {
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+         }
 
         // Game variabelen
         const player = {
