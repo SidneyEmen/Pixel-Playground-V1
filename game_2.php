@@ -36,7 +36,7 @@
         const invaderHeight = 20;
         let invaderSpeed = 2;
         let invaderDirection = 1;
-       
+        let currentLevel = 1; // Start bij level 1
 
         const keys = {};
 
@@ -127,13 +127,12 @@
                 
                 player.x = canvas.width / 2 - (player.width / 2);
                
-                bullets = [];
-
-                gameStarted = false; // Belangrijk: zet de startfase even terug op false
-                createInvaders();
+                 bullets = [];
                 
 
-              
+                createInvaders();
+        
+                document.location.reload();
             }
         }
 
