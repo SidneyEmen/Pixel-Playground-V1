@@ -119,8 +119,10 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-
             ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#007bff";
+            ctx.fillRect(player.x, player.y, player.width, player.height);
 
             // Speler (Groen)
             ctx.fillStyle = "#007bff";
