@@ -19,9 +19,9 @@
         // Game variabelen
         const player = {
             x: canvas.width / 2 - 20,
-            y: canvas.height - 50,
-            width: 52,
-            height: 32,
+            y: canvas.height - 40,
+            width: 80,
+            height: 52,
             speed: 3
             
         };
@@ -141,8 +141,8 @@
            
     ];
 
-    const pixelWidth = player.width / 20;
-    const pixelHeight = player.height / 16;
+    const pixelWidth = player.width / 15;
+    const pixelHeight = player.height / 13;
 
     for (let row = 0; row < shipDesign.length; row++) {
         for (let col = 0; col < shipDesign[row].length; col++) {
