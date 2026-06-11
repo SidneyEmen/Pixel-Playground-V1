@@ -20,6 +20,8 @@
             speed: 5
         };
 
+        let isGameActive = true;
+
         let bullets = [];
         let invaders = [];
         const invaderRows = 3;
@@ -95,12 +97,14 @@
 
             invaders.forEach(invader => {
                 if (invader.y + invader.height >= player.y) {
+                    isGameActive = false;
                     alert("Game Over!");
                     document.location.reload();
                 }
             });
 
             if (invaders.length === 0) {
+                isGameActive = false;
                 alert("Gewonnen!");
                 document.location.reload();
             }
@@ -127,6 +131,9 @@
         }
 
         function gameLoop() {
+
+            if (!isGameActive) return;
+
             update();
             draw();
             requestAnimationFrame(gameLoop);
