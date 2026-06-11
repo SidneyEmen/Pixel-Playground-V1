@@ -114,26 +114,19 @@
                 }
             });
 
-           if (invaders.length === 0) {
-        // Als Level 3 IS GEHAALD (dus de speler zou naar level 4 gaan)
-        if (currentLevel === 3) {
-            alert("Gefeliciteerd! Je hebt alle 3 de levels uitgespeeld en de aarde gered! 🏆");
-            currentLevel = 1; // Reset naar level 1
-            document.location.reload(); // Herlaad de pagina om helemaal overnieuw te beginnen
-            return;
-        }
+            if (invaders.length === 0) {
+                currentLevel++; // Ga naar het volgende level
+   
+                alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel + "!");
+                player.x = canvas.width / 2 - (player.width / 2);
 
-        // Als level 1 of 2 is gehaald, gaan we gewoon door naar het volgende level:
-        currentLevel++; 
+                bullets = [];
+
+                createInvaders();
         
-        alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel);
-        
-        player.x = canvas.width / 2 - (player.width / 2);
-        bullets = [];
-        
-        gameStarted = false; 
-        createInvaders(); // Maakt de nieuwe rij(en) en berekent de nieuwe snelheid
-    }
+                document.location.reload();
+            }
+        }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
