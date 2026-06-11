@@ -36,7 +36,9 @@
         const invaderHeight = 20;
         let invaderSpeed = 2;
         let invaderDirection = 1;
-        let currentLevel = 1; // Start bij level 1
+        let level = 1;
+        let score = 0;
+        l
 
         const keys = {};
 
