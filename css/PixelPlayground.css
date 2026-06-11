@@ -238,3 +238,12 @@ canvas {
     margin-bottom: 20px;
     
 }
+
+/* Voeg dit toe aan je style block of stylesheet */
+#space-invaders-game {
+    /* Vervang 'sterrenveld.jpg' door jouw bestandsnaam */
+    background-image: url('img/SpaceBackgroundSI.png'); 
+    background-size: cover;  /* Zorgt dat de afbeelding het hele veld vult */
+    background-position: center; /* Centreert de afbeelding */
+    background-repeat: no-repeat; /* Voorkomt dat de afbeelding wordt herhaald */
+}
