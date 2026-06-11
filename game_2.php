@@ -121,14 +121,36 @@
 
             ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "#007bff";
-            ctx.fillRect(player.x, player.y, player.width, player.height);
+            // Speler (Klassiek Groen Ruimteschip)
+    ctx.fillStyle = "#00FF00"; 
 
-            // Speler (Groen)
-            ctx.fillStyle = "#007bff";
-            ctx.fillRect(player.x, player.y, player.width, player.height);
-            
+    const shipDesign = [
+        [0,0,0,0,0,1,1,0,0,0,0,0],
+        [0,0,0,0,1,1,1,1,0,0,0,0],
+        [0,0,0,0,1,1,1,1,0,0,0,0],
+        [0,1,1,1,1,1,1,1,1,1,1,0],
+        [1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,1,1,0,0,1,1,0,0,1,1,1],
+        [1,1,0,0,0,0,0,0,0,0,1,1]
+    ];
 
+    const pixelWidth = player.width / 12;
+    const pixelHeight = player.height / 8;
+
+    for (let row = 0; row < shipDesign.length; row++) {
+        for (let col = 0; col < shipDesign[row].length; col++) {
+            if (shipDesign[row][col] === 1) {
+                ctx.fillRect(
+                    player.x + (col * pixelWidth),
+                    player.y + (row * pixelHeight),
+                    pixelWidth + 0.5,
+                    pixelHeight + 0.5
+                );
+            }
+        }
+    }
+    
             // Speler (Groen)
             ctx.fillStyle = "#007bff";
             ctx.fillRect(player.x, player.y, player.width, player.height);
