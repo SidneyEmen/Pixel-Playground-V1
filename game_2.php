@@ -152,6 +152,7 @@ gameLoop();
 
 
 </script>
+<canvas id="gameCanvas" width="600" height="500"></canvas>
 
 </main>
 
