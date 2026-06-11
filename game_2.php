@@ -118,15 +118,22 @@
 
             if (invaders.length === 0) {
                 currentLevel++; // Ga naar het volgende level
+
+                baseInvaderSpeed += 0.5; 
+                invaderSpeed = baseInvaderSpeed;
+                invaderDirection = 1
    
                 alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel + "!");
+                
                 player.x = canvas.width / 2 - (player.width / 2);
-
+               
                 bullets = [];
 
+                gameStarted = false; // Belangrijk: zet de startfase even terug op false
                 createInvaders();
-        
-                document.location.reload();
+                
+
+              
             }
         }
 
