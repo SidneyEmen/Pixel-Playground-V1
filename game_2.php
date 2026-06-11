@@ -19,7 +19,7 @@
         // Game variabelen
         const player = {
             x: canvas.width / 2 - 20,
-            y: canvas.height - 40,
+            y: canvas.height - 50,
             width: 52,
             height: 32,
             speed: 3
