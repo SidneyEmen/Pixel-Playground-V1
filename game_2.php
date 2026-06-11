@@ -119,7 +119,7 @@
             });
 
             // Invaders (Wit)
-            ctx.fillStyle = "#FFFFFF";
+            ctx.fillStyle = "#8208d9";
             invaders.forEach(invader => {
                 ctx.fillRect(invader.x, invader.y, invader.width, invader.height);
             });
