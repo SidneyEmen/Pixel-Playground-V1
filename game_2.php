@@ -109,7 +109,7 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Speler (Groen)
-            ctx.fillStyle = "#00FF00";
+            ctx.fillStyle = "#007bff";
             ctx.fillRect(player.x, player.y, player.width, player.height);
 
             // Kogels (Rood)
