@@ -20,8 +20,8 @@
         const player = {
             x: canvas.width / 2 - 20,
             y: canvas.height - 40,
-            width: 40,
-            height: 20,
+            width: 52,
+            height: 32,
             speed: 3
             
         };
