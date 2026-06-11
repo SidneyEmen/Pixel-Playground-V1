@@ -141,8 +141,8 @@
            
     ];
 
-    const pixelWidth = player.width / 15;
-    const pixelHeight = player.height / 13;
+    const pixelWidth = player.width / 20;
+    const pixelHeight = player.height / 16;
 
     for (let row = 0; row < shipDesign.length; row++) {
         for (let col = 0; col < shipDesign[row].length; col++) {
