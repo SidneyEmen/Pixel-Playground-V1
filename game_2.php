@@ -22,7 +22,7 @@
             y: canvas.height - 60,
             width: 60,
             height: 42,
-            speed: 3
+            speed: 4
             
         };
 
@@ -42,9 +42,7 @@
 
         function createInvaders() {
             invaders = [];
-
-            const dynamicRows = invaderRows + (currentLevel - 1);
-
+            
             invaderSpeed = 2 + (currentLevel - 1) * 1.5;
 
             for (let r = 0; r < invaderRows; r++) {
@@ -116,19 +114,26 @@
                 }
             });
 
-            if (invaders.length === 0) {
-                currentLevel++; // Ga naar het volgende level
-   
-                alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel + "!");
-                player.x = canvas.width / 2 - (player.width / 2);
-
-                bullets = [];
-
-                createInvaders();
-        
-                document.location.reload();
-            }
+           if (invaders.length === 0) {
+        // Als Level 3 IS GEHAALD (dus de speler zou naar level 4 gaan)
+        if (currentLevel === 3) {
+            alert("Gefeliciteerd! Je hebt alle 3 de levels uitgespeeld en de aarde gered! 🏆");
+            currentLevel = 1; // Reset naar level 1
+            document.location.reload(); // Herlaad de pagina om helemaal overnieuw te beginnen
+            return;
         }
+
+        // Als level 1 of 2 is gehaald, gaan we gewoon door naar het volgende level:
+        currentLevel++; 
+        
+        alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel);
+        
+        player.x = canvas.width / 2 - (player.width / 2);
+        bullets = [];
+        
+        gameStarted = false; 
+        createInvaders(); // Maakt de nieuwe rij(en) en berekent de nieuwe snelheid
+    }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -139,7 +144,7 @@
             ctx.fillStyle = "#0062ff"; 
 
             const shipDesign = [
-                [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0], // Rij 1: De spitse neus
+            [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0], // Rij 1: De spitse neus
             [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0], // Rij 2
             [0,0,0,0,0,0,1,1,1,0,0,0,0,0,0], // Rij 3
             [0,0,0,0,1,0,1,1,1,0,1,0,0,0,0], // Rij 4: Start van de zijflappen
