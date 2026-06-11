@@ -22,7 +22,7 @@
         let bullets = [];
         let invaders = [];
         const invaderRows = 3;
-        const invaderCols = 8;
+        const invaderCols = 15;
         const invaderWidth = 35;
         const invaderHeight = 20;
         let invaderSpeed = 1;
