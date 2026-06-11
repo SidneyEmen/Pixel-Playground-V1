@@ -181,14 +181,9 @@
             });
 
             // Invaders (Wit)
-            ctx.fillStyle = "#8208d9";
-            invaders.forEach(invader => {
-                ctx.fillRect(invader.x, invader.y, invader.width, invader.height);
-            });
-
-                  const invaderDesign = [
-    [0,0,0,0,1,1,1,1,0,0,0,0], // Rij 1: De bovenste antenne/kop
-    [0,0,0,0,1,1,1,1,0,0,0,0], // Rij 2
+            const invaderDesign = [
+           [0,0,0,0,1,1,1,1,0,0,0,0], // Rij 1: De bovenste antenne/kop
+      [0,0,0,0,1,1,1,1,0,0,0,0], // Rij 2
     [0,1,1,0,1,1,1,1,0,1,1,0], // Rij 3: Schouders vallen binnen
     [1,1,1,1,1,1,1,1,1,1,1,1], // Rij 4: Brede lijf
     [1,1,1,1,1,1,1,1,1,1,1,1], // Rij 5: Brede lijf
@@ -199,6 +194,29 @@
     [1,1,0,0,0,0,0,0,0,0,1,1]  // Rij 10: Poten aan de zijkant
 ];
 
+ctx.fillStyle = "#8208d9"; // Jouw paarse kleur
+    invaders.forEach(invader => {
+        // Bereken hoe groot elke pixel van de alien moet zijn
+        const pixelWidth = invader.width / 12;  // 12 kolommen breed
+        const pixelHeight = invader.height / 10; // 10 rijen hoog
+
+        for (let row = 0; row < invaderDesign.length; row++) {
+            for (let col = 0; col < invaderDesign[row].length; col++) {
+                if (invaderDesign[row][col] === 1) {
+                    ctx.fillRect(
+                        invader.x + (col * pixelWidth),
+                        invader.y + (row * pixelHeight),
+                        pixelWidth + 0.4,  // Kleine overlap tegen streepjes
+                        pixelHeight + 0.4
+                    );
+                }
+            }
+        }
+    });
+
+        
+
+   
         }
 
         function gameLoop() {
