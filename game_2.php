@@ -2,7 +2,8 @@
 
 <main>
 
-<h1 class="SI-Text">Space Invaders</h1>
+<h1 class="SI-Text">Welkom bij Space Invaders!</h1>
+<h3>Tip: Druk op F11 voor Fullscreen.</h3>
 
 <canvas id="gameCanvas" width="1000" height="600"></canvas>
 
