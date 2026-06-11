@@ -4,7 +4,7 @@
 
 <h1 class="SI-Text">Space Invaders</h1>
 
-<canvas id="gameCanvas" width="600" height="500"></canvas>
+<canvas id="gameCanvas" width="800" height="600"></canvas>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
