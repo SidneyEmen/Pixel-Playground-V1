@@ -2,7 +2,8 @@
 
 <main>
 
-<h1 class="SI-Text">Space Invaders</h1>
+<h1 class="SI-Text">Welkom bij Space Invaders!</h1>
+<h3>Tip: Druk op F11 voor Fullscreen.</h3>
 
 <canvas id="gameCanvas" width="1000" height="600"></canvas>
 
@@ -10,27 +11,42 @@
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 
+// ZET HIER DE AFBEELDING NEER:
+        const backgroundImage = new Image();
+        backgroundImage.src = 'img/SpaceBackgroundSI.png';
+
+
         // Game variabelen
         const player = {
             x: canvas.width / 2 - 20,
-            y: canvas.height - 40,
-            width: 40,
-            height: 20,
-            speed: 5
+            y: canvas.height - 60,
+            width: 60,
+            height: 42,
+            speed: 3
+            
         };
+
+        let isGameActive = true;
 
         let bullets = [];
         let invaders = [];
         const invaderRows = 3;
-        const invaderCols = 8;
+        const invaderCols = 12;
         const invaderWidth = 35;
         const invaderHeight = 20;
-        let invaderSpeed = 3;
+        let invaderSpeed = 2;
         let invaderDirection = 1;
+        let currentLevel = 1; // Start bij level 1
 
         const keys = {};
 
         function createInvaders() {
+            invaders = [];
+
+            const dynamicRows = invaderRows + (currentLevel - 1);
+
+            invaderSpeed = 2 + (currentLevel - 1) * 1.5;
+
             for (let r = 0; r < invaderRows; r++) {
                 for (let c = 0; c < invaderCols; c++) {
                     invaders.push({
@@ -94,13 +110,22 @@
 
             invaders.forEach(invader => {
                 if (invader.y + invader.height >= player.y) {
+                    isGameActive = false;
                     alert("Game Over!");
                     document.location.reload();
                 }
             });
 
             if (invaders.length === 0) {
-                alert("Gewonnen!");
+                currentLevel++; // Ga naar het volgende level
+   
+                alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel + "!");
+                player.x = canvas.width / 2 - (player.width / 2);
+
+                bullets = [];
+
+                createInvaders();
+        
                 document.location.reload();
             }
         }
@@ -108,9 +133,46 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+            // Speler (Klassiek Groen Ruimteschip)
+            ctx.fillStyle = "#0062ff"; 
+
+            const shipDesign = [
+                [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0], // Rij 1: De spitse neus
+            [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0], // Rij 2
+            [0,0,0,0,0,0,1,1,1,0,0,0,0,0,0], // Rij 3
+            [0,0,0,0,1,0,1,1,1,0,1,0,0,0,0], // Rij 4: Start van de zijflappen
+            [0,0,0,0,1,0,1,1,1,0,1,0,0,0,0], // Rij 5
+            [0,0,0,1,1,1,1,1,1,1,1,1,0,0,0], // Rij 6: Vleugels dijen uit
+            [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0], // Rij 7
+            [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0], // Rij 8
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], // Rij 9: Breedste punt
+            [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0], // Rij 10: Vleugeltips lopen schuin af
+            [0,0,0,0,0,1,1,1,1,1,0,0,0,0,0], // Rij 11: Onderkant romp
+            [0,0,0,0,0,1,1,0,1,1,0,0,0,0,0], // Rij 12: Ruimte voor de motoren
+            [0,0,0,0,0,1,1,0,1,1,0,0,0,0,0]
+           
+         ];
+
+
+    const pixelWidth = player.width / 15;
+    const pixelHeight = player.height / 13;
+
+    for (let row = 0; row < shipDesign.length; row++) {
+        for (let col = 0; col < shipDesign[row].length; col++) {
+            if (shipDesign[row][col] === 1) {
+                ctx.fillRect(
+                    player.x + (col * pixelWidth),
+                    player.y + (row * pixelHeight),
+                    pixelWidth + 0.4, // Kleine overlap om streepjes te voorkomen
+                    pixelHeight + 0.4
+                );
+            }
+        }
+    }
             // Speler (Groen)
-            ctx.fillStyle = "#007bff";
-            ctx.fillRect(player.x, player.y, player.width, player.height);
+
 
             // Kogels (Rood)
             ctx.fillStyle = "#FF0000";
@@ -119,13 +181,50 @@
             });
 
             // Invaders (Wit)
-            ctx.fillStyle = "#8208d9";
-            invaders.forEach(invader => {
-                ctx.fillRect(invader.x, invader.y, invader.width, invader.height);
-            });
+            const invaderDesign = [
+            [0,0,0,0,0,1,1,1,0,0,0,0,0], // Rij 1: Bovenkant antenne
+            [0,0,0,0,0,1,1,1,0,0,0,0,0], // Rij 2: Onderkant antenne
+            [0,0,0,0,1,1,1,1,1,0,0,0,0], // Rij 3: Schouderaanzet midden
+            [1,1,0,0,1,1,1,1,1,0,0,1,1], // Rij 4: Toppen van de zijpoten
+            [1,1,1,1,1,1,1,1,1,1,1,1,1], // Rij 5: Volledig brede bovenkant
+            [1,1,1,1,1,1,1,1,1,1,1,1,1], // Rij 6: Volledig brede middenstuk
+            [1,1,0,0,1,1,1,1,1,0,0,1,1], // Rij 7: Uitsnijding onderkant zijkanten
+            [1,1,0,0,1,0,1,0,1,0,0,1,1], // Rij 8: De "witte boze ogen" (0 = leeglaten)
+            [1,1,0,0,1,1,1,1,1,0,0,1,1], // Rij 9: Onderkant middenschip
+            [1,1,0,0,0,0,0,0,0,0,0,1,1], // Rij 10: Losstaande poten onderkant
+            [1,1,0,0,0,0,0,0,0,0,0,1,1]
+          
+];
+
+ctx.fillStyle = "#8208d9"; // Jouw paarse kleur
+    invaders.forEach(invader => {
+        // Bereken hoe groot elke pixel van de alien moet zijn
+        const pixelWidth = invader.width / 12;  // 12 kolommen breed
+        const pixelHeight = invader.height / 10; // 10 rijen hoog
+
+        for (let row = 0; row < invaderDesign.length; row++) {
+            for (let col = 0; col < invaderDesign[row].length; col++) {
+                if (invaderDesign[row][col] === 1) {
+                    ctx.fillRect(
+                        invader.x + (col * pixelWidth),
+                        invader.y + (row * pixelHeight),
+                        pixelWidth + 0.4,  // Kleine overlap tegen streepjes
+                        pixelHeight + 0.4
+                    );
+                }
+            }
+        }
+    });
+
+        
+
+   
         }
 
         function gameLoop() {
+
+            if (!isGameActive) return;
+
             update();
             draw();
             requestAnimationFrame(gameLoop);
