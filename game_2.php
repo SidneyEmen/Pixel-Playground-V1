@@ -2,7 +2,7 @@
 
 <main>
 
-<h1>Space Invaders</h1>
+<h1 class="SI-Text">Space Invaders</h1>
 
 <canvas id="gameCanvas" width="600" height="500"></canvas>
 
