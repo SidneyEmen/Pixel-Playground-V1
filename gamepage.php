@@ -10,16 +10,16 @@
             <p>Test your reaction timing!</p>
         </a>
 
-        <a href="game_2.php" class="game">
-            <h2>[GameName]</h2>
-            <img src="img/[IMG].png" alt="[ALT]">
-            <p>[Description]</p>
+        <a href="space_invaders.php" class="game">
+            <h2>Space Invaders</h2>
+            <img src="img/[IMG].png" alt="Space Invaders">
+            <p>Save the universe from the attacking Aliëns!</p>
         </a>
 
-        <a href="game_3.php" class="game">
-            <h2>[GameName]</h2>
-            <img src="img/[IMG].png" alt="[ALT]">
-            <p>[Description]</p>
+        <a href="hotdog_clicker.php" class="game">
+            <h2>Hotdog Clicker</h2>
+            <img src="img/Hot_dog_with_mustard.png" alt="Hotdog Clicker">
+            <p>Try to gather as many hotdogs as you can!</p>
         </a>
     </section>
 </main>

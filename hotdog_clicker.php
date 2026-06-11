@@ -45,6 +45,24 @@
     </div>
 </template>
 
+<!-- Template voor submenu van Upgrade 3 (Multiplier) -->
+<template id="upgrade3-template">
+    <div class="upgrade-popup">
+        <div class="upgrade-option" data-multiplier="2" data-cost="500">x2 multiplier (kost 500)</div>
+        <div class="upgrade-option" data-multiplier="5" data-cost="2000">x5 multiplier (kost 2000)</div>
+        <div class="upgrade-option" data-multiplier="10" data-cost="10000">x10 multiplier (kost 10000)</div>
+    </div>
+</template>
+
+<!-- Template voor submenu van Upgrade 4 (Time Booster) -->
+<template id="upgrade4-template">
+    <div class="upgrade-popup">
+        <div class="upgrade-option" data-multiplier="2" data-cost="1000">30 sec ×2 boost (kost 1000)</div>
+        <div class="upgrade-option" data-multiplier="3" data-cost="5000">30 sec ×3 boost (kost 5000)</div>
+        <div class="upgrade-option" data-multiplier="5" data-cost="20000">30 sec ×5 boost (kost 20000)</div>
+    </div>
+</template>
+
 
 <style>
 .hotdog-wrapper {
@@ -159,9 +177,16 @@ let autoPower = 0;
 let popup1 = null;
 let popup2 = null;
 
+let clickMultiplier = 1;
+let popup3 = null;
+
+let activeBoost = 1;
+let boostTimeout = null;
+let popup4 = null;
+
 // Hotdog click
 box.addEventListener('click', () => {
-    score += clickPower;
+    score += clickPower * clickMultiplier * activeBoost;
     updateScore();
 });
 
@@ -259,14 +284,123 @@ upgrade2.addEventListener('click', () => {
     });
 });
 
+const upgrade3 = document.querySelectorAll('.upgrade-item')[2];
+const template3 = document.querySelector('#upgrade3-template');
+
+
+// -------------------------
+// Upgrade 3 submenu
+// -------------------------
+upgrade3.addEventListener('click', () => {
+
+    // Sluit andere popups
+    if (popup1) { popup1.remove(); popup1 = null; }
+    if (popup2) { popup2.remove(); popup2 = null; }
+
+    // Als popup 3 al open is → sluit hem
+    if (popup3) {
+        popup3.remove();
+        popup3 = null;
+        return;
+    }
+
+    const clone = template3.content.cloneNode(true);
+    popup3 = clone.querySelector('.upgrade-popup');
+
+    const rect = upgrade3.getBoundingClientRect();
+    popup3.style.top = `${rect.bottom + window.scrollY + 10}px`;
+    popup3.style.left = `${rect.left + window.scrollX}px`;
+
+    document.body.appendChild(popup3);
+
+    popup3.querySelectorAll('.upgrade-option').forEach(option => {
+        option.addEventListener('click', () => {
+            const mult = parseInt(option.dataset.multiplier);
+            const cost = parseInt(option.dataset.cost);
+
+            if (score >= cost) {
+                score -= cost;
+                clickMultiplier *= mult;
+                updateScore();
+                upgrade3.innerHTML = `Upgrade 3 (Multiplier)<br>x${clickMultiplier}`;
+            } else {
+                option.textContent = `Niet genoeg hotdogs! (kost ${cost})`;
+                setTimeout(() => {
+                    option.textContent = `x${mult} multiplier (kost ${cost})`;
+                }, 1500);
+            }
+        });
+    });
+});
+
+const upgrade4 = document.querySelectorAll('.upgrade-item')[3];
+const template4 = document.querySelector('#upgrade4-template');
+
+// Upgrade 4 — Time Booster submenu
+upgrade4.addEventListener('click', () => {
+
+    // Sluit andere popups
+    if (popup1) { popup1.remove(); popup1 = null; }
+    if (popup2) { popup2.remove(); popup2 = null; }
+    if (popup3) { popup3.remove(); popup3 = null; }
+
+    // Als popup 4 al open is → sluit hem
+    if (popup4) {
+        popup4.remove();
+        popup4 = null;
+        return;
+    }
+
+    const clone = template4.content.cloneNode(true);
+    popup4 = clone.querySelector('.upgrade-popup');
+
+    const rect = upgrade4.getBoundingClientRect();
+    popup4.style.top = `${rect.bottom + window.scrollY + 10}px`;
+    popup4.style.left = `${rect.left + window.scrollX}px`;
+
+    document.body.appendChild(popup4);
+
+    popup4.querySelectorAll('.upgrade-option').forEach(option => {
+        option.addEventListener('click', () => {
+            const boost = parseInt(option.dataset.multiplier);
+            const cost = parseInt(option.dataset.cost);
+
+            if (score >= cost) {
+                score -= cost;
+                updateScore();
+
+                // Reset bestaande boost
+                if (boostTimeout) clearTimeout(boostTimeout);
+
+                activeBoost = boost;
+                upgrade4.innerHTML = `Upgrade 4 (Boost)<br>${boost}× actief`;
+
+                // Boost eindigt na 30 seconden
+                boostTimeout = setTimeout(() => {
+                    activeBoost = 1;
+                    upgrade4.innerHTML = `Upgrade 4 (Boost)<br>Geen boost`;
+                }, 30000);
+
+            } else {
+                option.textContent = `Niet genoeg hotdogs! (kost ${cost})`;
+                setTimeout(() => {
+                    option.textContent = `30 sec ×${boost} boost (kost ${cost})`;
+                }, 1500);
+            }
+        });
+    });
+});
+
 // Auto income
 setInterval(() => {
-    score += autoPower;
+    score += autoPower * activeBoost;
     updateScore();
 }, 1000);
 
-upgrade1.innerHTML = `Upgrade 1 (klik)<br>Klikkracht: ${clickPower}`;
-upgrade2.innerHTML = `Upgrade 2 (auto)<br>Auto-power: ${autoPower}`;
+upgrade1.innerHTML = `Upgrade 1 (Cllik)<br>Click-Power: ${clickPower}`;
+upgrade2.innerHTML = `Upgrade 2 (Auto)<br>Auto-Power: ${autoPower}`;
+upgrade3.innerHTML = `Upgrade 3 (Multiplier)<br>Multiplier: x${clickMultiplier}`;
+upgrade4.innerHTML = `Upgrade 4 (Boost)<br>Geen boost`;
 </script>
 
 <?php include 'includes/footer.php'; ?>
