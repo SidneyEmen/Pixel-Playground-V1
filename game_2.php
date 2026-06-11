@@ -116,22 +116,19 @@
                 }
             });
 
-          if (invaders.length === 0) {
-        currentLevel++; // Level gaat met 1 omhoog
+            if (invaders.length === 0) {
+                currentLevel++; // Ga naar het volgende level
+   
+                alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel + "!");
+                player.x = canvas.width / 2 - (player.width / 2);
+
+                bullets = [];
+
+                createInvaders();
         
-        alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel + "!");
-        
-        // Zet de speler terug in het midden
-        player.x = canvas.width / 2 - (player.width / 2);
-        
-        // Haal oude kogels weg
-        bullets = [];
-        
-        // Maak de nieuwe invaders aan (die pakken automatisch de nieuwe snelheid!)
-        createInvaders();
-        
-        // ❌ GEEN document.location.reload(); meer hier!
-    }
+                document.location.reload();
+            }
+        }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
