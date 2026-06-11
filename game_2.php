@@ -141,8 +141,8 @@
            
     ];
 
-    const pixelWidth = player.width / 12;
-    const pixelHeight = player.height / 8;
+    const pixelWidth = player.width / 15;
+    const pixelHeight = player.height / 13;
 
     for (let row = 0; row < shipDesign.length; row++) {
         for (let col = 0; col < shipDesign[row].length; col++) {
@@ -150,13 +150,12 @@
                 ctx.fillRect(
                     player.x + (col * pixelWidth),
                     player.y + (row * pixelHeight),
-                    pixelWidth + 0.5,
-                    pixelHeight + 0.5
+                    pixelWidth + 0.4, // Kleine overlap om streepjes te voorkomen
+                    pixelHeight + 0.4
                 );
             }
         }
     }
-
             // Speler (Groen)
 
 
