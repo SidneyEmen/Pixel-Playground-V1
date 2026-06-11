@@ -11,7 +11,7 @@
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
         const backgroundImage = new Image();
-        backgroundImage.src = 'images/space_background.jpg';
+        backgroundImage.src = 'img/SpaceBackgroundSI.png';
 
         // Game variabelen
         const player = {
