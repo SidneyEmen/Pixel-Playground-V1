@@ -150,10 +150,9 @@
             }
         }
     }
-    
+
             // Speler (Groen)
-            ctx.fillStyle = "#007bff";
-            ctx.fillRect(player.x, player.y, player.width, player.height);
+
 
             // Kogels (Rood)
             ctx.fillStyle = "#FF0000";
