@@ -10,6 +10,8 @@
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
+        const backgroundImage = new Image();
+        backgroundImage.src = 'images/space_background.jpg';
 
         // Game variabelen
         const player = {
@@ -18,6 +20,7 @@
             width: 40,
             height: 20,
             speed: 5
+            
         };
 
         let isGameActive = true;
