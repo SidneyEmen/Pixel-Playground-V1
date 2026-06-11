@@ -4,26 +4,8 @@
 
 <h1>Space Invaders</h1>
 
-<style>
-    body {
-            background-color: #111;
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        canvas {
-            border: 4px solid white;
-            background-color: black;
-        }
-</style>
-
 <script>
-    const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+  
 
 // Game variabelen
 const player = {
@@ -167,9 +149,9 @@ function gameLoop() {
 createInvaders();
 gameLoop();
 
-
 </script>
-<canvas id="gameCanvas" width="600" height="500"></canvas>
+
+
 
 </main>
 
