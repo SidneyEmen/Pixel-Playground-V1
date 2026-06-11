@@ -45,7 +45,7 @@
 
             const dynamicRows = invaderRows + (currentLevel - 1);
 
-            invaderSpeed = 2 + (currentLevel * 0.5);
+            invaderSpeed = 2 + (currentLevel - 1) * 1.5;
 
             for (let r = 0; r < invaderRows; r++) {
                 for (let c = 0; c < invaderCols; c++) {
@@ -116,19 +116,22 @@
                 }
             });
 
-            if (invaders.length === 0) {
-                currentLevel++; // Ga naar het volgende level
-                invaderSpeed = 3 + (currentLevel - 1) * 1.5;
-                alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel + "!");
-                player.x = canvas.width / 2 - (player.width / 2);
-
-                bullets = [];
-
-                createInvaders();
+          if (invaders.length === 0) {
+        currentLevel++; // Level gaat met 1 omhoog
         
-                document.location.reload();
-            }
-        }
+        alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel + "!");
+        
+        // Zet de speler terug in het midden
+        player.x = canvas.width / 2 - (player.width / 2);
+        
+        // Haal oude kogels weg
+        bullets = [];
+        
+        // Maak de nieuwe invaders aan (die pakken automatisch de nieuwe snelheid!)
+        createInvaders();
+        
+        // ❌ GEEN document.location.reload(); meer hier!
+    }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
