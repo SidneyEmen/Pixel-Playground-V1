@@ -36,6 +36,16 @@
     </div>
 </template>
 
+<!-- Template voor submenu van Upgrade 2 -->
+<template id="upgrade2-template">
+    <div class="upgrade-popup">
+        <div class="upgrade-option" data-power="1" data-cost="100">+1/sec (kost 100)</div>
+        <div class="upgrade-option" data-power="5" data-cost="400">+5/sec (kost 400)</div>
+        <div class="upgrade-option" data-power="20" data-cost="1500">+20/sec (kost 1500)</div>
+    </div>
+</template>
+
+
 <style>
 .hotdog-wrapper {
     display: flex;
@@ -99,7 +109,7 @@
     font-size: 1.6rem;
 }
 
-/* 🔽 Popup styling */
+/* Popup styling */
 .upgrade-popup {
     position: absolute;
     background-color: var(--black);
@@ -138,14 +148,18 @@ const box = document.querySelector('.hotdog-box');
 const scoreText = document.querySelector('.hotdog-score');
 const upgrade1 = document.querySelectorAll('.upgrade-item')[0];
 const upgrade2 = document.querySelectorAll('.upgrade-item')[1];
-const template = document.querySelector('#upgrade1-template');
+
+const template1 = document.querySelector('#upgrade1-template');
+const template2 = document.querySelector('#upgrade2-template');
 
 let score = 0;
 let clickPower = 1;
 let autoPower = 0;
-let popupVisible = false;
 
-// Klik op de hotdog
+let popup1 = null;
+let popup2 = null;
+
+// Hotdog click
 box.addEventListener('click', () => {
     score += clickPower;
     updateScore();
@@ -155,23 +169,37 @@ function updateScore() {
     scoreText.textContent = `Hotdogs: ${score}`;
 }
 
-// 🔽 Upgrade 1 — opent submenu
-upgrade1.addEventListener('click', (e) => {
-    if (popupVisible) return;
-    const clone = template.content.cloneNode(true);
-    const popup = clone.querySelector('.upgrade-popup');
+// -------------------------
+// Upgrade 1 submenu
+// -------------------------
+upgrade1.addEventListener('click', () => {
+
+    // Sluit popup 2 als die open is
+    if (popup2) {
+        popup2.remove();
+        popup2 = null;
+    }
+
+    // Als popup 1 al open is → sluit hem
+    if (popup1) {
+        popup1.remove();
+        popup1 = null;
+        return;
+    }
+
+    const clone = template1.content.cloneNode(true);
+    popup1 = clone.querySelector('.upgrade-popup');
 
     const rect = upgrade1.getBoundingClientRect();
-    popup.style.top = `${rect.bottom + window.scrollY + 10}px`;
-    popup.style.left = `${rect.left + window.scrollX}px`;
+    popup1.style.top = `${rect.bottom + window.scrollY + 10}px`;
+    popup1.style.left = `${rect.left + window.scrollX}px`;
 
-    document.body.appendChild(popup);
-    popupVisible = true;
+    document.body.appendChild(popup1);
 
-    popup.querySelectorAll('.upgrade-option').forEach(option => {
+    popup1.querySelectorAll('.upgrade-option').forEach(option => {
         option.addEventListener('click', () => {
-            const power = parseInt(option.dataset.power);
-            const cost = parseInt(option.dataset.cost);
+            const power = +option.dataset.power;
+            const cost = +option.dataset.cost;
 
             if (score >= cost) {
                 score -= cost;
@@ -180,46 +208,65 @@ upgrade1.addEventListener('click', (e) => {
                 upgrade1.innerHTML = `Upgrade 1 (+1/klik)<br>Klikkracht: ${clickPower}`;
             } else {
                 option.textContent = `Niet genoeg hotdogs! (kost ${cost})`;
-                setTimeout(() => {
-                    option.textContent = `+${power} per klik (kost ${cost})`;
-                }, 1500);
+                setTimeout(() => option.textContent = `+${power} per klik (kost ${cost})`, 1500);
             }
         });
     });
-
-    document.addEventListener('click', (event) => {
-        if (!popup.contains(event.target) && event.target !== upgrade1) {
-            popup.remove();
-            popupVisible = false;
-        }
-    }, { once: true });
 });
 
-// 🔽 Upgrade 2 — Auto‑Hotdog
-let autoCost = 100;
+// -------------------------
+// Upgrade 2 submenu
+// -------------------------
 upgrade2.addEventListener('click', () => {
-    if (score >= autoCost) {
-        score -= autoCost;
-        autoPower++;
-        updateScore();
-        upgrade2.innerHTML = `Upgrade 2 (+1/sec)<br>Auto-power: ${autoPower}`;
-    } else {
-        upgrade2.innerHTML = `Niet genoeg hotdogs!<br>(kost ${autoCost})`;
-        setTimeout(() => {
-            upgrade2.innerHTML = `Upgrade 2 (+1/sec)<br>Auto-power: ${autoPower}`;
-        }, 1500);
+
+    // Sluit popup 1 als die open is
+    if (popup1) {
+        popup1.remove();
+        popup1 = null;
     }
+
+    // Als popup 2 al open is → sluit hem
+    if (popup2) {
+        popup2.remove();
+        popup2 = null;
+        return;
+    }
+
+    const clone = template2.content.cloneNode(true);
+    popup2 = clone.querySelector('.upgrade-popup');
+
+    const rect = upgrade2.getBoundingClientRect();
+    popup2.style.top = `${rect.bottom + window.scrollY + 10}px`;
+    popup2.style.left = `${rect.left + window.scrollX}px`;
+
+    document.body.appendChild(popup2);
+
+    popup2.querySelectorAll('.upgrade-option').forEach(option => {
+        option.addEventListener('click', () => {
+            const power = +option.dataset.power;
+            const cost = +option.dataset.cost;
+
+            if (score >= cost) {
+                score -= cost;
+                autoPower += power;
+                updateScore();
+                upgrade2.innerHTML = `Upgrade 2 (+1/sec)<br>Auto-power: ${autoPower}`;
+            } else {
+                option.textContent = `Niet genoeg hotdogs! (kost ${cost})`;
+                setTimeout(() => option.textContent = `+${power}/sec (kost ${cost})`, 1500);
+            }
+        });
+    });
 });
 
+// Auto income
 setInterval(() => {
-    if (autoPower > 0) {
-        score += autoPower;
-        updateScore();
-    }
+    score += autoPower;
+    updateScore();
 }, 1000);
 
-upgrade1.innerHTML = `Upgrade 1 (+1/klik)<br>Klikkracht: ${clickPower}`;
-upgrade2.innerHTML = `Upgrade 2 (+1/sec)<br>Auto-power: ${autoPower}`;
+upgrade1.innerHTML = `Upgrade 1 (klik)<br>Klikkracht: ${clickPower}`;
+upgrade2.innerHTML = `Upgrade 2 (auto)<br>Auto-power: ${autoPower}`;
 </script>
 
 <?php include 'includes/footer.php'; ?>
