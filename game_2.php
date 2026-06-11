@@ -118,6 +118,7 @@
 
             if (invaders.length === 0) {
                 currentLevel++; // Ga naar het volgende level
+                invaderSpeed = 3 + (currentLevel - 1) * 1.5;
                 alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel + "!");
                 player.x = canvas.width / 2 - (player.width / 2);
 
