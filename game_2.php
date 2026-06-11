@@ -22,7 +22,7 @@
             y: canvas.height - 40,
             width: 40,
             height: 20,
-            speed: 5
+            speed: 3
             
         };
 
@@ -34,7 +34,7 @@
         const invaderCols = 8;
         const invaderWidth = 35;
         const invaderHeight = 20;
-        let invaderSpeed = 3;
+        let invaderSpeed = 2;
         let invaderDirection = 1;
 
         const keys = {};
