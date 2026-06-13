@@ -3,7 +3,9 @@
   --white: white;
   --black: black;
   --background: rgb(25, 27, 45);
+  --background_lightmode: rgb(87, 93, 146);
   --header_navbar: rgb(2, 4, 38);
+  --header_navbar_lightmode: rgb(9, 15, 74);
   --game_box: #24263a;
 }
 
@@ -136,22 +138,21 @@ main {
 .website_info,
 .highscore_info {
     width: 45%;
-    text-align: center; /* koppen blijven gecentreerd */
+    text-align: center;
 }
 
-/* Alleen de tekst onder 'The Website' links uitlijnen */
-.website_info p {
+.website_info > p {
     text-align: left;
 }
 
-.website_info h2,
-.highscore_info h2 {
+.website_info > h2,
+.highscore_info > h2 {
     font-size: 1.5rem;
     margin-bottom: 10px;
 }
 
-.website_info p,
-.highscore_info p {
+.website_info > p,
+.highscore_info > p {
     font-size: 1rem;
 }
 

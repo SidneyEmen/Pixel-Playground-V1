@@ -10,13 +10,20 @@ if (isset($_GET['logout'])) {
 
 $currentUser = $_SESSION['username'] ?? null;
 
+/* -------------------------
+   CHANGE PASSWORD
+-------------------------- */
 if (isset($_POST['submit_password'])) {
-    $newPassword = $_POST['new_password'];
-    $confirmPassword = $_POST['confirm_password'];
+    $newPassword = trim($_POST['new_password']);
+    $confirmPassword = trim($_POST['confirm_password']);
 
-    if ($newPassword !== $confirmPassword) {
+    if ($newPassword === '' || $confirmPassword === '') {
+        $error = "Please fill in both password fields.";
+    }
+    elseif ($newPassword !== $confirmPassword) {
         $error = "Passwords don't match.";
-    } else {
+    } 
+    else {
         $stmt = $conn->prepare("UPDATE gebruikers SET password = ? WHERE username = ?");
         $stmt->bind_param("ss", $newPassword, $currentUser);
         $stmt->execute();
@@ -24,18 +31,28 @@ if (isset($_POST['submit_password'])) {
     }
 }
 
+/* -------------------------
+   CHANGE USERNAME
+-------------------------- */
 if (isset($_POST['submit_username'])) {
-    $newUsername = $_POST['new_username'];
+    $newUsername = trim($_POST['new_username']);
 
-    $stmt = $conn->prepare("UPDATE gebruikers SET username = ? WHERE username = ?");
-    $stmt->bind_param("ss", $newUsername, $currentUser);
-    $stmt->execute();
+    if ($newUsername === '') {
+        $error = "Please enter a username.";
+    } 
+    else {
+        $stmt = $conn->prepare("UPDATE gebruikers SET username = ? WHERE username = ?");
+        $stmt->bind_param("ss", $newUsername, $currentUser);
+        $stmt->execute();
 
-    $_SESSION['username'] = $newUsername;
-    $success = "Username successfully changed!";
+        $_SESSION['username'] = $newUsername;
+        $success = "Username successfully changed!";
+    }
 }
 
-// ACCOUNT DELETE
+/* -------------------------
+   DELETE ACCOUNT
+-------------------------- */
 if (isset($_POST['submit_delete'])) {
 
     $del1 = $conn->prepare("DELETE FROM friends WHERE user = ? OR friend = ?");
@@ -55,6 +72,9 @@ if (isset($_POST['submit_delete'])) {
     exit;
 }
 
+/* -------------------------
+   FRIEND LIST
+-------------------------- */
 $friends = $conn->prepare("SELECT friend FROM friends WHERE user = ?");
 $friends->bind_param("s", $currentUser);
 $friends->execute();
@@ -76,6 +96,7 @@ $friendsResult = $friends->get_result();
         <p style="color:green;"><?= $success ?></p>
     <?php endif; ?>
 
+    <!-- CHANGE PASSWORD -->
     <form action="" method="POST" id="form_password">
         <h2>Change Password:</h2><br>
         New Password:<br>
@@ -87,12 +108,14 @@ $friendsResult = $friends->get_result();
         <input type="submit" name="submit_password" value="Change" id="submit">
     </form>
 
+    <!-- DELETE ACCOUNT -->
     <form action="" method="POST" id="form_delete" onsubmit="return confirmDelete();">
         <h2>Delete Account:</h2>
         <p style="color:red;">This will permanently delete this account.</p><br>
         <input type="submit" name="submit_delete" value="Delete Account" id="delete_btn">
     </form>
 
+    <!-- CHANGE USERNAME -->
     <form action="" method="POST" id="form_username">
         <h2>Change Username:</h2><br>
         New Username:<br>

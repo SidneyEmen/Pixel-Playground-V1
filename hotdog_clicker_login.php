@@ -12,67 +12,64 @@ if (isset($_GET['logout'])) {
 
 <main class="hotdog-wrapper">
 
-    <!-- Linker upgrade menu -->
+    <!-- Linker menu -->
     <section class="upgrade-menu left-menu">
         <h3>Upgrades</h3>
         <article class="upgrade-item">Upgrade 1 (+1 per klik)</article>
         <article class="upgrade-item">Upgrade 2</article>
     </section>
 
-    <!-- Midden: Hotdog clicker -->
+    <!-- Hotdog -->
     <section class="hotdog-center">
         <h2 class="hotdog-score">Hotdogs: 0</h2>
-
         <article class="hotdog-box">
-            <p class="hotdog-text">Click the hotdog!</p>
+            <img src="img/hotdog.png" alt="Hotdog" class="hotdog-img">
         </article>
     </section>
 
-    <!-- Rechter upgrade menu -->
+    <!-- Rechter menu -->
     <section class="upgrade-menu right-menu">
         <h3>Upgrades</h3>
         <article class="upgrade-item">Upgrade 3</article>
         <article class="upgrade-item">Upgrade 4</article>
     </section>
 
+    <!-- Upgrade 1 -->
+    <template id="upgrade1-template">
+        <div class="upgrade-popup">
+            <div class="upgrade-option" data-power="1" data-cost="50">+1 per click (Costs 50)</div>
+            <div class="upgrade-option" data-power="5" data-cost="200">+5 per click (Costs 200)</div>
+            <div class="upgrade-option" data-power="20" data-cost="1000">+20 per click (Costs 1000)</div>
+        </div>
+    </template>
+
+    <!-- Upgrade 2 -->
+    <template id="upgrade2-template">
+        <div class="upgrade-popup">
+            <div class="upgrade-option" data-power="1" data-cost="100">+1/sec (Costs 100)</div>
+            <div class="upgrade-option" data-power="5" data-cost="400">+5/sec (Costs 400)</div>
+            <div class="upgrade-option" data-power="20" data-cost="1500">+20/sec (Costs 1500)</div>
+        </div>
+    </template>
+
+    <!-- Upgrade 3 -->
+    <template id="upgrade3-template">
+        <div class="upgrade-popup">
+            <div class="upgrade-option" data-multiplier="2" data-cost="500">x2 multiplier (Costs 500)</div>
+            <div class="upgrade-option" data-multiplier="5" data-cost="2000">x5 multiplier (Costs 2000)</div>
+            <div class="upgrade-option" data-multiplier="10" data-cost="10000">x10 multiplier (Costs 10000)</div>
+        </div>
+    </template>
+
+    <!-- Upgrade 4 -->
+    <template id="upgrade4-template">
+        <div class="upgrade-popup">
+            <div class="upgrade-option" data-multiplier="2" data-cost="1000">30 sec x2 boost (Costs 1000)</div>
+            <div class="upgrade-option" data-multiplier="3" data-cost="5000">30 sec x3 boost (Costs 5000)</div>
+            <div class="upgrade-option" data-multiplier="5" data-cost="20000">30 sec x5 boost (Costs 20000)</div>
+        </div>
+    </template>
 </main>
-
-<!-- Template voor submenu van Upgrade 1 -->
-<template id="upgrade1-template">
-    <div class="upgrade-popup">
-        <div class="upgrade-option" data-power="1" data-cost="50">+1 per klik (kost 50)</div>
-        <div class="upgrade-option" data-power="5" data-cost="200">+5 per klik (kost 200)</div>
-        <div class="upgrade-option" data-power="20" data-cost="1000">+20 per klik (kost 1000)</div>
-    </div>
-</template>
-
-<!-- Template voor submenu van Upgrade 2 -->
-<template id="upgrade2-template">
-    <div class="upgrade-popup">
-        <div class="upgrade-option" data-power="1" data-cost="100">+1/sec (kost 100)</div>
-        <div class="upgrade-option" data-power="5" data-cost="400">+5/sec (kost 400)</div>
-        <div class="upgrade-option" data-power="20" data-cost="1500">+20/sec (kost 1500)</div>
-    </div>
-</template>
-
-<!-- Template voor submenu van Upgrade 3 (Multiplier) -->
-<template id="upgrade3-template">
-    <div class="upgrade-popup">
-        <div class="upgrade-option" data-multiplier="2" data-cost="500">x2 multiplier (kost 500)</div>
-        <div class="upgrade-option" data-multiplier="5" data-cost="2000">x5 multiplier (kost 2000)</div>
-        <div class="upgrade-option" data-multiplier="10" data-cost="10000">x10 multiplier (kost 10000)</div>
-    </div>
-</template>
-
-<!-- Template voor submenu van Upgrade 4 (Time Booster) -->
-<template id="upgrade4-template">
-    <div class="upgrade-popup">
-        <div class="upgrade-option" data-multiplier="2" data-cost="1000">30 sec ×2 boost (kost 1000)</div>
-        <div class="upgrade-option" data-multiplier="3" data-cost="5000">30 sec ×3 boost (kost 5000)</div>
-        <div class="upgrade-option" data-multiplier="5" data-cost="20000">30 sec ×5 boost (kost 20000)</div>
-    </div>
-</template>
-
 
 <style>
 .hotdog-wrapper {
@@ -124,7 +121,7 @@ if (isset($_GET['logout'])) {
 .hotdog-box {
     width: 400px;
     height: 250px;
-    background-color: var(--black);
+    background-color: transparent;
     border-radius: 12px;
     display: flex;
     justify-content: center;
@@ -132,12 +129,17 @@ if (isset($_GET['logout'])) {
     cursor: pointer;
 }
 
-.hotdog-text {
-    color: var(--white);
-    font-size: 1.6rem;
+.hotdog-img {
+    width: 500px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
 }
 
-/* Popup styling */
+.hotdog-img:active {
+    transform: scale(0.95);
+}
+
 .upgrade-popup {
     position: absolute;
     background-color: var(--black);
@@ -169,6 +171,7 @@ if (isset($_GET['logout'])) {
     from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
 </style>
 
 <script>
@@ -204,9 +207,7 @@ function updateScore() {
     scoreText.textContent = `Hotdogs: ${score}`;
 }
 
-// -------------------------
 // Upgrade 1 submenu
-// -------------------------
 upgrade1.addEventListener('click', () => {
 
     // Sluit popup 2 als die open is
@@ -240,27 +241,23 @@ upgrade1.addEventListener('click', () => {
                 score -= cost;
                 clickPower += power;
                 updateScore();
-                upgrade1.innerHTML = `Upgrade 1 (+1/klik)<br>Klikkracht: ${clickPower}`;
+                upgrade1.innerHTML = `Upgrade 1 (Click)<br>Click-Power: ${clickPower}`;
             } else {
-                option.textContent = `Niet genoeg hotdogs! (kost ${cost})`;
-                setTimeout(() => option.textContent = `+${power} per klik (kost ${cost})`, 1500);
+                option.textContent = `Not enough hotdogs!`;
+                setTimeout(() => option.textContent = `+${power} per click (Costs ${cost})`, 1500);
             }
         });
     });
 });
 
-// -------------------------
 // Upgrade 2 submenu
-// -------------------------
 upgrade2.addEventListener('click', () => {
 
-    // Sluit popup 1 als die open is
     if (popup1) {
         popup1.remove();
         popup1 = null;
     }
 
-    // Als popup 2 al open is → sluit hem
     if (popup2) {
         popup2.remove();
         popup2 = null;
@@ -285,10 +282,10 @@ upgrade2.addEventListener('click', () => {
                 score -= cost;
                 autoPower += power;
                 updateScore();
-                upgrade2.innerHTML = `Upgrade 2 (+1/sec)<br>Auto-power: ${autoPower}`;
+                upgrade2.innerHTML = `Upgrade 2 (Auto)<br>Auto-Power: ${autoPower}`;
             } else {
-                option.textContent = `Niet genoeg hotdogs! (kost ${cost})`;
-                setTimeout(() => option.textContent = `+${power}/sec (kost ${cost})`, 1500);
+                option.textContent = `Not enough hotdogs!`;
+                setTimeout(() => option.textContent = `+${power}/sec (Costs ${cost})`, 1500);
             }
         });
     });
@@ -297,17 +294,12 @@ upgrade2.addEventListener('click', () => {
 const upgrade3 = document.querySelectorAll('.upgrade-item')[2];
 const template3 = document.querySelector('#upgrade3-template');
 
-
-// -------------------------
 // Upgrade 3 submenu
-// -------------------------
 upgrade3.addEventListener('click', () => {
 
-    // Sluit andere popups
     if (popup1) { popup1.remove(); popup1 = null; }
     if (popup2) { popup2.remove(); popup2 = null; }
 
-    // Als popup 3 al open is → sluit hem
     if (popup3) {
         popup3.remove();
         popup3 = null;
@@ -332,11 +324,11 @@ upgrade3.addEventListener('click', () => {
                 score -= cost;
                 clickMultiplier *= mult;
                 updateScore();
-                upgrade3.innerHTML = `Upgrade 3 (Multiplier)<br>x${clickMultiplier}`;
+                upgrade3.innerHTML = `Upgrade 3 (Multiplier)<br>Multiplier: x${clickMultiplier}`;
             } else {
-                option.textContent = `Niet genoeg hotdogs! (kost ${cost})`;
+                option.textContent = `Not enough hotdogs!`;
                 setTimeout(() => {
-                    option.textContent = `x${mult} multiplier (kost ${cost})`;
+                    option.textContent = `x${mult} multiplier (Costs ${cost})`;
                 }, 1500);
             }
         });
@@ -349,12 +341,10 @@ const template4 = document.querySelector('#upgrade4-template');
 // Upgrade 4 — Time Booster submenu
 upgrade4.addEventListener('click', () => {
 
-    // Sluit andere popups
     if (popup1) { popup1.remove(); popup1 = null; }
     if (popup2) { popup2.remove(); popup2 = null; }
     if (popup3) { popup3.remove(); popup3 = null; }
 
-    // Als popup 4 al open is → sluit hem
     if (popup4) {
         popup4.remove();
         popup4 = null;
@@ -383,18 +373,18 @@ upgrade4.addEventListener('click', () => {
                 if (boostTimeout) clearTimeout(boostTimeout);
 
                 activeBoost = boost;
-                upgrade4.innerHTML = `Upgrade 4 (Boost)<br>${boost}× actief`;
+                upgrade4.innerHTML = `Upgrade 4 (Boost)<br>Boost: x${boost}`;
 
                 // Boost eindigt na 30 seconden
                 boostTimeout = setTimeout(() => {
                     activeBoost = 1;
-                    upgrade4.innerHTML = `Upgrade 4 (Boost)<br>Geen boost`;
+                    upgrade4.innerHTML = `Upgrade 4 (Boost)<br>Boost Expired`;
                 }, 30000);
 
             } else {
-                option.textContent = `Niet genoeg hotdogs! (kost ${cost})`;
+                option.textContent = `Not enough hotdogs!`;
                 setTimeout(() => {
-                    option.textContent = `30 sec ×${boost} boost (kost ${cost})`;
+                    option.textContent = `30 sec x${boost} boost (Costs ${cost})`;
                 }, 1500);
             }
         });
@@ -407,10 +397,10 @@ setInterval(() => {
     updateScore();
 }, 1000);
 
-upgrade1.innerHTML = `Upgrade 1 (Cllik)<br>Click-Power: ${clickPower}`;
+upgrade1.innerHTML = `Upgrade 1 (Click)<br>Click-Power: ${clickPower}`;
 upgrade2.innerHTML = `Upgrade 2 (Auto)<br>Auto-Power: ${autoPower}`;
 upgrade3.innerHTML = `Upgrade 3 (Multiplier)<br>Multiplier: x${clickMultiplier}`;
-upgrade4.innerHTML = `Upgrade 4 (Boost)<br>Geen boost`;
+upgrade4.innerHTML = `Upgrade 4 (Boost)<br>Boost: None`;
 </script>
 
 <?php include 'includes/footer.php'; ?>
