@@ -11,12 +11,12 @@
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 
-// ZET HIER DE AFBEELDING NEER:
+
         const backgroundImage = new Image();
         backgroundImage.src = 'img/SpaceBackgroundSI.png';
 
 
-        // Game variabelen
+     
         const player = {
             x: canvas.width / 2 - 20,
             y: canvas.height - 60,
@@ -27,26 +27,44 @@
         };
 
         let isGameActive = true;
-
         let bullets = [];
         let invaders = [];
-        const invaderRows = 3;
-        const invaderCols = 12;
+
         const invaderWidth = 35;
         const invaderHeight = 20;
+
         let invaderSpeed = 2;
         let invaderDirection = 1;
-        let currentLevel = 1; // <--- VOEG DIT HIER TOE
+        let currentLevel = 1;
+        let lastShotTime = 0;
+        let score = 0; 
+        let highscore = localStorage.getItem("spaceInvadersHighscore") || 0;
+
+        const shotDelay = 100; 
         
         const keys = {};
+
+       
 
         function createInvaders() {
             invaders = [];
             
             invaderSpeed = 2 + (currentLevel - 1) * 1.5;
 
-            for (let r = 0; r < invaderRows; r++) {
-                for (let c = 0; c < invaderCols; c++) {
+            let rows = 4; 
+            let cols = 8; 
+
+            if (currentLevel === 2) {
+                rows = 6; 
+                cols = 10; 
+            } else if (currentLevel === 3) {
+
+                rows = 6; 
+                cols = 12;
+           }
+
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
                     invaders.push({
                         x: c * (invaderWidth + 15) + 50,
                         y: r * (invaderHeight + 15) + 50,
@@ -66,12 +84,27 @@
         });
 
         function update() {
-            if ((keys["ArrowLeft"] || keys["a"]) && player.x > 0) {
-                player.x -= player.speed;
-            }
-            if ((keys["ArrowRight"] || keys["d"]) && player.x < canvas.width - player.width) {
-                player.x += player.speed;
-            }
+    if ((keys["ArrowLeft"] || keys["a"]) && player.x > 0) {
+        player.x -= player.speed;
+    }
+    if ((keys["ArrowRight"] || keys["d"]) && player.x < canvas.width - player.width) {
+        player.x += player.speed;
+    }
+
+  
+    if (keys[" "] || keys["ArrowUp"]) {
+        const now = Date.now();
+        if (now - lastShotTime > shotDelay) {
+            bullets.push({ 
+                x: player.x + player.width / 2 - 2, 
+                y: player.y, 
+                width: 4, 
+                height: 10 
+            });
+            lastShotTime = now; 
+        }
+    }
+    
 
             bullets.forEach((bullet, index) => {
                 bullet.y -= 7;
@@ -92,6 +125,7 @@
             }
 
             bullets.forEach((bullet, bIndex) => {
+
                 invaders.forEach((invader, iIndex) => {
                     if (bullet.x < invader.x + invader.width &&
                         bullet.x + bullet.width > invader.x &&
@@ -101,54 +135,92 @@
                         setTimeout(() => {
                             invaders.splice(iIndex, 1);
                             bullets.splice(bIndex, 1);
+                            score += 10;
                         }, 0);
                     }
                 });
             });
 
-            invaders.forEach(invader => {
-                if (invader.y + invader.height >= player.y) {
-                    isGameActive = false;
-                    alert("Game Over!");
-                    document.location.reload();
-                }
-            });
+          for (let invader of invaders) {
+       
+        if (isGameActive && (invader.y + invader.height >= player.y)) {
+            isGameActive = false; 
+            alert("Game Over!");
 
-            if (invaders.length === 0) {
-                currentLevel++; // Ga naar het volgende level
-   
-                alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel + "!");
-                player.x = canvas.width / 2 - (player.width / 2);
-
-                bullets = [];
-
-                createInvaders();
-        
-                document.location.reload();
+           
+            if (score > highscore) {
+                highscore = score;
+                localStorage.setItem("spaceInvadersHighscore", highscore);
             }
+
+           
+            currentLevel = 1;
+            score = 0;
+            bullets = [];
+            player.x = canvas.width / 2 - player.width / 2;
+        
+            isGameActive = true;          
+            return;
         }
+    }
+
+    if (invaders.length === 0 && isGameActive) {
+       
+    if (currentLevel === 3) {
+            
+            isGameActive = false;
+            alert("Gefeliciteerd! Je hebt alle 3 de levels uitgespeeld en de aarde gered! 🚀");
+
+            if (score > highscore) {
+                highscore = score;
+                localStorage.setItem("spaceInvadersHighscore", highscore);
+            }
+
+            document.location.reload(); 
+    }
+     
+        } else {
+        currentLevel++; 
+        
+       
+        alert("Level " + (currentLevel - 1) + " gehaald! Bereid je voor op Level " + currentLevel);
+        
+        
+        player.x = canvas.width / 2 - (player.width / 2);
+        
+      
+        bullets = [];
+        invaderDirection = 1;
+        
+        
+        createInvaders();
+        
+       
+        }
+    }
+
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-            // Speler (Klassiek Groen Ruimteschip)
+          
             ctx.fillStyle = "#0062ff"; 
 
             const shipDesign = [
-            [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0], // Rij 1: De spitse neus
-            [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0], // Rij 2
-            [0,0,0,0,0,0,1,1,1,0,0,0,0,0,0], // Rij 3
-            [0,0,0,0,1,0,1,1,1,0,1,0,0,0,0], // Rij 4: Start van de zijflappen
-            [0,0,0,0,1,0,1,1,1,0,1,0,0,0,0], // Rij 5
-            [0,0,0,1,1,1,1,1,1,1,1,1,0,0,0], // Rij 6: Vleugels dijen uit
-            [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0], // Rij 7
-            [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0], // Rij 8
-            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], // Rij 9: Breedste punt
-            [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0], // Rij 10: Vleugeltips lopen schuin af
-            [0,0,0,0,0,1,1,1,1,1,0,0,0,0,0], // Rij 11: Onderkant romp
-            [0,0,0,0,0,1,1,0,1,1,0,0,0,0,0], // Rij 12: Ruimte voor de motoren
+            [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0], 
+            [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0], 
+            [0,0,0,0,0,0,1,1,1,0,0,0,0,0,0], 
+            [0,0,0,0,1,0,1,1,1,0,1,0,0,0,0], 
+            [0,0,0,0,1,0,1,1,1,0,1,0,0,0,0], 
+            [0,0,0,1,1,1,1,1,1,1,1,1,0,0,0], 
+            [0,0,1,1,1,1,1,1,1,1,1,1,1,0,0], 
+            [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0], 
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], 
+            [0,1,1,1,1,1,1,1,1,1,1,1,1,1,0], 
+            [0,0,0,0,0,1,1,1,1,1,0,0,0,0,0], 
+            [0,0,0,0,0,1,1,0,1,1,0,0,0,0,0], 
             [0,0,0,0,0,1,1,0,1,1,0,0,0,0,0]
            
          ];
@@ -163,42 +235,42 @@
                 ctx.fillRect(
                     player.x + (col * pixelWidth),
                     player.y + (row * pixelHeight),
-                    pixelWidth + 0.4, // Kleine overlap om streepjes te voorkomen
+                    pixelWidth + 0.4, 
                     pixelHeight + 0.4
                 );
             }
         }
     }
-            // Speler (Groen)
+          
 
 
-            // Kogels (Rood)
+           
             ctx.fillStyle = "#FF0000";
             bullets.forEach(bullet => {
                 ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
             });
 
-            // Invaders (Wit)
+            
             const invaderDesign = [
-            [0,0,0,0,0,1,1,1,0,0,0,0,0], // Rij 1: Bovenkant antenne
-            [0,0,0,0,0,1,1,1,0,0,0,0,0], // Rij 2: Onderkant antenne
-            [0,0,0,0,1,1,1,1,1,0,0,0,0], // Rij 3: Schouderaanzet midden
-            [1,1,0,0,1,1,1,1,1,0,0,1,1], // Rij 4: Toppen van de zijpoten
-            [1,1,1,1,1,1,1,1,1,1,1,1,1], // Rij 5: Volledig brede bovenkant
-            [1,1,1,1,1,1,1,1,1,1,1,1,1], // Rij 6: Volledig brede middenstuk
-            [1,1,0,0,1,1,1,1,1,0,0,1,1], // Rij 7: Uitsnijding onderkant zijkanten
-            [1,1,0,0,1,0,1,0,1,0,0,1,1], // Rij 8: De "witte boze ogen" (0 = leeglaten)
-            [1,1,0,0,1,1,1,1,1,0,0,1,1], // Rij 9: Onderkant middenschip
-            [1,1,0,0,0,0,0,0,0,0,0,1,1], // Rij 10: Losstaande poten onderkant
+            [0,0,0,0,0,1,1,1,0,0,0,0,0], 
+            [0,0,0,0,0,1,1,1,0,0,0,0,0], 
+            [0,0,0,0,1,1,1,1,1,0,0,0,0], 
+            [1,1,0,0,1,1,1,1,1,0,0,1,1], 
+            [1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1], 
+            [1,1,0,0,1,1,1,1,1,0,0,1,1], 
+            [1,1,0,0,1,0,1,0,1,0,0,1,1], 
+            [1,1,0,0,1,1,1,1,1,0,0,1,1], 
+            [1,1,0,0,0,0,0,0,0,0,0,1,1], 
             [1,1,0,0,0,0,0,0,0,0,0,1,1]
           
 ];
 
-ctx.fillStyle = "#8208d9"; // Jouw paarse kleur
+ctx.fillStyle = "#8208d9"; 
     invaders.forEach(invader => {
-        // Bereken hoe groot elke pixel van de alien moet zijn
-        const pixelWidth = invader.width / 12;  // 12 kolommen breed
-        const pixelHeight = invader.height / 10; // 10 rijen hoog
+       
+        const pixelWidth = invader.width / 12;  
+        const pixelHeight = invader.height / 10; 
 
         for (let row = 0; row < invaderDesign.length; row++) {
             for (let col = 0; col < invaderDesign[row].length; col++) {
@@ -206,7 +278,7 @@ ctx.fillStyle = "#8208d9"; // Jouw paarse kleur
                     ctx.fillRect(
                         invader.x + (col * pixelWidth),
                         invader.y + (row * pixelHeight),
-                        pixelWidth + 0.4,  // Kleine overlap tegen streepjes
+                        pixelWidth + 0.4,  
                         pixelHeight + 0.4
                     );
                 }
@@ -214,7 +286,18 @@ ctx.fillStyle = "#8208d9"; // Jouw paarse kleur
         }
     });
 
-        
+       
+    ctx.font = "20px 'Courier New', Courier, monospace";
+    ctx.fillStyle = "white";
+    
+   
+    ctx.fillText("Score: " + score, 20, 40);
+    ctx.fillText("Level: " + currentLevel, 20, 70);
+    
+
+    ctx.textAlign = "right";
+    ctx.fillText("Highscore: " + highscore, canvas.width - 20, 40);
+    ctx.textAlign = "left"; 
 
    
         }
@@ -232,9 +315,6 @@ ctx.fillStyle = "#8208d9"; // Jouw paarse kleur
         gameLoop();
     
 </script>
-
-
-
 </main>
 
 <?php include 'includes/footer.php'; ?>
