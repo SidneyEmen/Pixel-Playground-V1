@@ -8,7 +8,7 @@ if (isset($_GET['logout'])) {
 }
 ?>
 
-<?php include 'includes/header.php'; ?>
+<?php include 'includes/header_login.php'; ?>
 
 <main class="hotdog-wrapper">
 
