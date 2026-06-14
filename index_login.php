@@ -1,7 +1,25 @@
-<?php include 'includes/header.php'; ?>
+<?php
+session_start();
+
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: login.php");
+    exit;
+}
+?>
+
+<?php include 'includes/header_login.php'; ?>
 
 <main>
-    <h1 class="welcome_title">Welcome!</h1>
+    <h1 class="welcome_title">
+        <?php
+            if (isset($_SESSION['username'])) {
+                echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
+            } else {
+                echo "Welcome!";
+            }
+        ?>
+    </h1>
 
     <section class="sections_info">
         <section class="website_info">

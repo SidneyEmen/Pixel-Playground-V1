@@ -36,16 +36,17 @@ header {
     background-color: var(--header_navbar);
     padding: 0.8vw;
 
-    display: flex;               
-    align-items: center;         
+    display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
 header > nav {
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 300px;
+    justify-content: space-evenly;
+    flex: 1;
+    margin-left: 2vw;
 }
 
 header > nav > a {
@@ -64,7 +65,6 @@ header > nav > a:hover {
 
 header > img {
     max-width: 100%;
-    height: auto;
     height: 8vh;
 }
 
@@ -136,7 +136,12 @@ main {
 .website_info,
 .highscore_info {
     width: 45%;
-    text-align: center;
+    text-align: center; /* koppen blijven gecentreerd */
+}
+
+/* Alleen de tekst onder 'The Website' links uitlijnen */
+.website_info p {
+    text-align: left;
 }
 
 .website_info h2,
@@ -224,4 +229,17 @@ main {
     flex-direction: column;
     align-items: center;
     font-size: 1.2rem;
+}
+
+/*Game Space Invaders */
+
+canvas {
+    border: 4px solid var(--white); 
+    border-radius: 4px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.SI-Text {
+    margin-bottom: 20px;
+    
 }
